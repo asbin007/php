@@ -96,54 +96,28 @@ a :hover {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>Contact Application</header>
+    <header>update contact Application</header>
+    <?php
+    include 'db.php';
+    $id=$_GET['id'];
+    $sql="SELECT * FROM contact WHERE id=" . $id;
+    $result=mysqli_query($conn,$sql);
+    if($result){
+        $row=mysqli_fetch_assoc($result);
+        $name=$row['name'];
+        $phone=$row['phone'];
+    }
+    
+    ?>
     <form action="addData.php" method="POST">
         <main>
             <label for="name">Name:</label><br>
             <input type="text" name="name" id="name" required><br>
             <label for="contact">Contact:</label><br>
             <input type="number" name="contact" id="contact" required><br>
-            <button type="submit">Save</button>
+            <button type="submit">Update</button>
         </main>
     </form> 
-    <br>
-    <hr>
-    <h2>List of Contacts</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Phone No</th>
-                <th>actions</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            <?php 
-            include('db.php');
-            $sql = "SELECT * FROM names";
-            $result = mysqli_query($conn, $sql);
-            if ($result && mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    $name = $row['name'];
-                    $phone = $row['phone'];
-            ?>
-            <tr>
-                <td><?php echo $name; ?></td>
-                <td><?php echo $phone; ?></td><td>
-                    <a href="delete.php?id=<?php echo $id;?>">Delete</a>
-                    <a href="update.php?id=<?php echo $id;?>">Update</a>
-                </td>
-                
-            </tr>
-
-            <?php
-                }
-            } else {
-                echo "<tr><td colspan='2'>No contacts found</td></tr>";
-            }
-            ?>
-        </tbody>
-    </table>
+    <
 </body>
 </html>
